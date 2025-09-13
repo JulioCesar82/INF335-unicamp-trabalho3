@@ -72,7 +72,7 @@ public class App
         	  
         	  ProdutoBean produto = anuncio.getProduto();
         	  
-        	  System.out.println( "Anuncio " + index + ": Valor final já descotado R$ " + anuncio.getValor() + ". Desconto: R$ " + anuncio.getDesconto() );
+        	  System.out.println( "Anuncio " + index + ": Valor final já descontado R$ " + anuncio.getValor() + ". Desconto: R$ " + anuncio.getDesconto() );
         	  System.out.println( produto.getCodigo() + " - " + produto.getNome() );
         	  System.out.println( produto.getDescricao() );
         	  System.out.println( );        	          	  
