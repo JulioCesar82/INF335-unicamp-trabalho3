@@ -99,14 +99,16 @@ public class AnuncioBean implements java.io.Serializable {
 	// 	return produto.getValor()-(produto.getValor()/desconto);
 	// }
 
-    // FIXED NEW VERSION
     public Double getValor() {
+        if (produto == null || produto.getValor() == null) {
+            throw new IllegalStateException("Produto or Produto valor cannot be null");
+        }
         if (desconto == null) {
-            throw new NullPointerException("Desconto cannot be null");
+            return produto.getValor(); // No discount if null
         }
-        if (desconto == 0.0) {
-            throw new ArithmeticException("Desconto cannot be zero");
+        if (desconto < 0.0 || desconto > 1.0) {
+            throw new IllegalArgumentException("Desconto must be between 0.0 and 1.0");
         }
-        return produto.getValor() - desconto;
+        return produto.getValor() * (1 - desconto);
     }
 }

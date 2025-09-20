@@ -1,7 +1,7 @@
 package br.unicamp.ic.inf335.beans;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProdutoBeanTest {
     ProdutoBean produto = new ProdutoBean();

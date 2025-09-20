@@ -1,7 +1,6 @@
 package br.unicamp.ic.inf335.beans;
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -83,28 +82,43 @@ public class AnuncioBeanTest {
         AnuncioBean anuncio = new AnuncioBean();
         anuncio.setProduto(produto);
     
-        // Test with a valid desconto value
-        anuncio.setDesconto(0.25); // 25% discount
-        Double expectedValue = 200.0 - (200.0 * 0.25);
+        // Test with a valid desconto value (25% discount)
+        anuncio.setDesconto(0.25);
+        Double expectedValue = 200.0 * (1 - 0.25); // 150.0
         assertEquals(expectedValue, anuncio.getValor(), 0.001);
     
         // Test with a desconto of 0.0 (no discount)
         anuncio.setDesconto(0.0);
-        assertThrows(ArithmeticException.class, anuncio::getValor);
-    
+        expectedValue = 200.0 * (1 - 0.0); // 200.0
+        assertEquals(expectedValue, anuncio.getValor(), 0.001);
     
         // Test with a desconto of 1.0 (100% discount)
         anuncio.setDesconto(1.0);
-        expectedValue = 200.0 - (200.0 * 1.0);
+        expectedValue = 200.0 * (1 - 1.0); // 0.0
         assertEquals(expectedValue, anuncio.getValor(), 0.001);
     
-        // Test with a null desconto
+        // Test with a null desconto (should return original value)
         anuncio.setDesconto(null);
-        try {
-            anuncio.getValor();
-            fail("Expected NullPointerException due to null desconto");
-        } catch (NullPointerException e) {
-            // Expected exception
-        }
+        expectedValue = 200.0; // Original value
+        assertEquals(expectedValue, anuncio.getValor(), 0.001);
+
+        // Test with invalid discount values
+        anuncio.setDesconto(-0.1);
+        assertThrows(IllegalArgumentException.class, anuncio::getValor);
+
+        anuncio.setDesconto(1.1);
+        assertThrows(IllegalArgumentException.class, anuncio::getValor);
+
+        // Test with null product or product value
+        // Test with null product
+        AnuncioBean anuncioNullProduct = new AnuncioBean();
+        anuncioNullProduct.setProduto(null); // Explicitly set product to null
+        assertThrows(IllegalStateException.class, anuncioNullProduct::getValor);
+
+        // Test with product having null valor
+        ProdutoBean produtoWithNullValor = new ProdutoBean();
+        produtoWithNullValor.setValor(null); // Explicitly set valor to null
+        anuncioNullProduct.setProduto(produtoWithNullValor);
+        assertThrows(IllegalStateException.class, anuncioNullProduct::getValor);
     }
 }
