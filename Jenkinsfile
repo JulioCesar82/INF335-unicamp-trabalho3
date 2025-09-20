@@ -15,17 +15,17 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -f atividade04/pom.xml clean compile'
+                bat 'mvn -f atividade04/pom.xml clean compile'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn -f atividade04/pom.xml test'
+                bat 'mvn -f atividade04/pom.xml test'
             }
         }
         stage('Package') {
             steps {
-                sh 'mvn -f atividade04/pom.xml package'
+                bat 'mvn -f atividade04/pom.xml package'
             }
         }
     }
